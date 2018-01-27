@@ -19,8 +19,10 @@ export default {
 
   effects: {
     *uploadAudio({ formdata, params }, { call, put, select }) {  // eslint-disable-line
+      const { blobUrl } = params;
       const { data: question } = yield call(uploadAudio, formdata);
       question.type = 'question';
+      question.blobUrl = blobUrl;
       delete question.status;
       
       const { data: reply } = yield call(audioReply, { ...question, ...params, type: 'INIT'});
